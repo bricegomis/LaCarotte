@@ -21,7 +21,7 @@ namespace carotte.API.Services
             _dateTimeProvider = dateTimeProvider;
             _client = new MongoClient(connectionString);
 
-            string carotteCollectionName = "Carottes";
+            string carotteCollectionName = "CarrotItems";
             string profileCollectionName = "Profiles";
 
             var database = _client.GetDatabase(dbName);

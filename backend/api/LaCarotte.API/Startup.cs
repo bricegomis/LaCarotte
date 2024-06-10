@@ -21,6 +21,7 @@ namespace carotte.API
             var port = Configuration["MongoDB:Port"];
             var login = Configuration["MongoDB:Login"];
             var password = Configuration["MongoDB:Password"];
+            var dbName = Configuration["MongoDB:DbName"];
             var connectionString = $"mongodb://{login}:{password}@{host}:{port}/";
 
             services.AddCors(options =>
@@ -52,7 +53,7 @@ namespace carotte.API
             var loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog(Log.Logger));
             var datetimeProvider = new DateTimeProvider();
 
-            var mongoDBService = new MongoDBService(loggerFactory.CreateLogger<MongoDBService>(), datetimeProvider, connectionString, "carotte");
+            var mongoDBService = new MongoDBService(loggerFactory.CreateLogger<MongoDBService>(), datetimeProvider, connectionString, dbName);
             services.AddSingleton<IMongoDBService>(mongoDBService);
             
             var manager = new carotteManager(loggerFactory.CreateLogger<ICarotteManager>(),
