@@ -41,7 +41,10 @@ namespace carotte.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "carotte.API", Version = "v1" });
             });
 
-            if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(port) || string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(host)
+                || string.IsNullOrEmpty(port)
+                || string.IsNullOrEmpty(login)
+                || string.IsNullOrEmpty(password))
             {
                 throw new Exception("MongoDB credentials not configured");
             }
@@ -68,9 +71,7 @@ namespace carotte.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "carotte.API v1"));
             }
 
-            //app.UseHttpsRedirection();
             app.UseCors();
-            //app.UseAuthorization();
 
             var options = new DefaultFilesOptions();
             options.DefaultFileNames.Clear();

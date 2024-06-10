@@ -9,7 +9,7 @@
       },
     },
     "Container (Dockerfile)": {
-      "commandName": "Docker",
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "environmentVariables": {
