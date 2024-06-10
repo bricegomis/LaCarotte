@@ -1,4 +1,4 @@
-export interface DoItem {
+export interface Carotte {
   id?: string | null;
   title?: string;
   desc?: string | null;
@@ -15,7 +15,7 @@ export interface DoItem {
   historyBonus?: number | null;
 }
 
-export interface CarrotItem {
+export interface Carotte {
   id?: string | null;
   title?: string | null;
   desc?: string | null;
@@ -33,8 +33,8 @@ export interface Profile {
   login: string;
   scoreTotal: number;
   scoreWeek: number;
-  doItemsIds: string[];
-  doItems: DoItem[];
+  carottesIds: string[];
+  carottes: Carotte[];
   dateLastConnection: string;
   dateCreated: string;
 }

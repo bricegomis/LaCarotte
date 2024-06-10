@@ -1,68 +1,68 @@
 import { defineStore } from 'pinia';
-import { CarrotItem } from 'components/models';
+import { Carotte } from 'components/models';
 import { api } from 'boot/axios';
 
-export const useCarrotItemStore = defineStore('carrotItem', {
+export const useCarotteStore = defineStore('carotte', {
   state: () => ({
-    carrotItems: [] as CarrotItem[],
-    isEditingCarrotItemDialogVisible: false,
-    editingCarrotItem: {} as CarrotItem,
+    carottes: [] as Carotte[],
+    isEditingCarotteDialogVisible: false,
+    editingCarotte: {} as Carotte,
   }),
   actions: {
-    async fetchCarrotItems() {
+    async fetchCarottes() {
       try {
-        const response = await api.get('CarrotItem');
-        this.carrotItems = response.data;
+        const response = await api.get('Carotte');
+        this.carottes = response.data;
       } catch (error) {}
     },
-    async createCarrotItem(carrotItem: CarrotItem) {
+    async createCarotte(carotte: Carotte) {
       try {
-        await api.post('CarrotItem', carrotItem);
-        await this.fetchCarrotItems();
+        await api.post('Carotte', carotte);
+        await this.fetchCarottes();
       } catch (error) {
-        console.error('Error creating CarrotItem:', error);
+        console.error('Error creating Carotte:', error);
       }
     },
-    async updateCarrotItem(carrotItem: CarrotItem) {
+    async updateCarotte(carotte: Carotte) {
       try {
-        if (carrotItem.id)
-          // TODO use carrotItem ?
+        if (carotte.id)
+          // TODO use carotte ?
           // => editing
-          await api.put('CarrotItem', carrotItem);
+          await api.put('Carotte', carotte);
         // => new
-        else await api.post('CarrotItem', carrotItem);
-        await this.fetchCarrotItems();
+        else await api.post('Carotte', carotte);
+        await this.fetchCarottes();
       } catch (error) {
-        console.error('Error when editing a carrotItem :', error);
+        console.error('Error when editing a carotte :', error);
       }
     },
-    async deleteCarrotItem(carrotItem: CarrotItem) {
+    async deleteCarotte(carotte: Carotte) {
       try {
-        await api.delete(`CarrotItem/${carrotItem.id}`);
-        await this.fetchCarrotItems();
+        await api.delete(`Carotte/${carotte.id}`);
+        await this.fetchCarottes();
       } catch (error) {
-        console.error('Error deleting CarrotItem:', error);
+        console.error('Error deleting Carotte:', error);
       }
     },
-    async finishCarrotItem(carrotItem: CarrotItem) {
+    async finishCarotte(carotte: Carotte) {
       try {
-        await api.put('CarrotItem/finish', carrotItem);
-        await this.fetchCarrotItems();
+        await api.put('Carotte/finish', carotte);
+        await this.fetchCarottes();
       } catch (error) {
-        console.error('Error when finishing a carrotItem :', error);
+        console.error('Error when finishing a carotte :', error);
       }
     },
-    async startEditingCarrotItem(carrotItem: CarrotItem) {
-      if (carrotItem) this.editingCarrotItem = carrotItem;
-      else this.editingCarrotItem = {};
-      this.isEditingCarrotItemDialogVisible = true;
+    async startEditingCarotte(carotte: Carotte) {
+      if (carotte) this.editingCarotte = carotte;
+      else this.editingCarotte = {};
+      this.isEditingCarotteDialogVisible = true;
     },
-    async SaveEditingCarrotItem() {
-      await this.updateCarrotItem(this.editingCarrotItem);
-      this.isEditingCarrotItemDialogVisible = false;
+    async SaveEditingCarotte() {
+      await this.updateCarotte(this.editingCarotte);
+      this.isEditingCarotteDialogVisible = false;
     },
     async closeNewItemDialog() {
-      this.isEditingCarrotItemDialogVisible = false;
+      this.isEditingCarotteDialogVisible = false;
     },
   },
   persist: {

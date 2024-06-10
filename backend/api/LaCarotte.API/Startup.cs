@@ -1,9 +1,9 @@
-using DoList.API.Manager;
-using DoList.API.Services;
+using carotte.API.Manager;
+using carotte.API.Services;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
-namespace DoList.API
+namespace carotte.API
 {
     public class Startup
     {
@@ -38,7 +38,7 @@ namespace DoList.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DoList.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "carotte.API", Version = "v1" });
             });
 
             if (string.IsNullOrEmpty(host) || string.IsNullOrEmpty(port) || string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
@@ -49,13 +49,13 @@ namespace DoList.API
             var loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog(Log.Logger));
             var datetimeProvider = new DateTimeProvider();
 
-            var mongoDBService = new MongoDBService(loggerFactory.CreateLogger<MongoDBService>(), datetimeProvider, connectionString, "DoList");
+            var mongoDBService = new MongoDBService(loggerFactory.CreateLogger<MongoDBService>(), datetimeProvider, connectionString, "carotte");
             services.AddSingleton<IMongoDBService>(mongoDBService);
             
-            var manager = new DoListManager(loggerFactory.CreateLogger<IDoListManager>(),
+            var manager = new carotteManager(loggerFactory.CreateLogger<ICarotteManager>(),
                                             mongoDBService,
                                             datetimeProvider);
-            services.AddSingleton<IDoListManager>(manager);
+            services.AddSingleton<ICarotteManager>(manager);
             services.AddSingleton<IHostedService>(provider => manager);
         }
 
@@ -65,7 +65,7 @@ namespace DoList.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DoList.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "carotte.API v1"));
             }
 
             //app.UseHttpsRedirection();

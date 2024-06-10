@@ -1,4 +1,4 @@
-# DoList App (lacarotte-client-web)
+# Carottes App (lacarotte-client-web)
 
 Another todo list manager
 

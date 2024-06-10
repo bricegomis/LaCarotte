@@ -1,18 +1,18 @@
 <template>
   <div class="row justify-around">
     <div
-      v-for="doItem in doItems"
-      :key="doItem.id ?? ''"
+      v-for="carotte in carottes"
+      :key="carotte.id ?? ''"
       class="col-12 col-md-4 q-pa-xs"
     >
       <q-card flat bordered>
         <q-card-section horizontal class="justify-around items-center">
           <q-img
-            :src="doItem.image ?? ''"
+            :src="carotte.image ?? ''"
             class="bg-white col-2 q-ma-sm"
             width="50px"
           />
-          <div class="col-9">{{ doItem.title }}</div>
+          <div class="col-9">{{ carotte.title }}</div>
         </q-card-section>
         <q-separator />
 
@@ -21,7 +21,7 @@
             <q-btn
               flat
               icon="edit"
-              @click="doItemStore.startEditingDoItem(doItem)"
+              @click="carotteStore.startEditingCarotte(carotte)"
               >Edit</q-btn
             >
           </div>
@@ -29,27 +29,27 @@
             <q-rating
               class="q-px-sm"
               readonly
-              v-if="doItem.historyBonus && doItem"
-              :color="doItem.schedule == 'Daily' ? 'primary' : 'grey'"
+              v-if="carotte.historyBonus && carotte"
+              :color="carotte.schedule == 'Daily' ? 'primary' : 'grey'"
               icon="thumb_up"
-              v-model="doItem.historyBonus"
-              :disabled="doItem.historyBonus ?? 0 > 0"
+              v-model="carotte.historyBonus"
+              :disabled="carotte.historyBonus ?? 0 > 0"
             />
             <q-btn
               color="positive"
               square
               class="q-ma-none score-container text-gray"
-              :disabled="doItem.isFinished"
-              @click="doItemStore.finishDoItem(doItem)"
+              :disabled="carotte.isFinished"
+              @click="carotteStore.finishCarotte(carotte)"
             >
               <div
                 class="text-bold score-text text-lowercase"
-                v-if="haveBonus(doItem)"
+                v-if="haveBonus(carotte)"
               >
-                +{{ bonusPoint(doItem) }}pts |
+                +{{ bonusPoint(carotte) }}pts |
               </div>
-              <div :class="{ pointBonus: haveBonus(doItem) }">
-                {{ doItem.points }} pts
+              <div :class="{ pointBonus: haveBonus(carotte) }">
+                {{ carotte.points }} pts
               </div>
             </q-btn>
           </div>
@@ -60,13 +60,13 @@
 </template>
 
 <script setup lang="ts">
-import { useDoItemStore } from 'src/stores/doItem-store';
+import { useCarotteStore } from 'src/stores/carotte-store';
 import { computed } from 'vue';
-import { DoItem } from './models';
+import { Carotte } from './models';
 
-const doItemStore = useDoItemStore();
-const doItems = computed(() => {
-  return doItemStore.doItems.slice().sort((a, b) => {
+const carotteStore = useCarotteStore();
+const carottes = computed(() => {
+  return carotteStore.carottes.slice().sort((a, b) => {
     if (a.isFinished && !b.isFinished) {
       return 1;
     } else if (!a.isFinished && b.isFinished) {
@@ -76,12 +76,12 @@ const doItems = computed(() => {
     }
   });
 });
-const haveBonus = (doItem: DoItem) => {
-  return doItem.historyBonus && doItem.historyBonus > 0;
+const haveBonus = (carotte: Carotte) => {
+  return carotte.historyBonus && carotte.historyBonus > 0;
 };
-const bonusPoint = (doItem: DoItem) => {
-  if (!doItem || !doItem.historyBonus) return;
-  return (doItem.historyBonus ?? 0) * 10;
+const bonusPoint = (carotte: Carotte) => {
+  if (!carotte || !carotte.historyBonus) return;
+  return (carotte.historyBonus ?? 0) * 10;
 };
 </script>
 

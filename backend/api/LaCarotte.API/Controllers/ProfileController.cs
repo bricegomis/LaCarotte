@@ -1,21 +1,21 @@
-﻿using DoList.API.Manager;
-using DoList.API.Models;
+﻿using carotte.API.Manager;
+using carotte.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace DoList.API.Controllers
+namespace carotte.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ProfileController : ControllerBase
     {
         private readonly ILogger<ProfileController> _logger;
-        private readonly IDoListManager _doListManager;
+        private readonly ICarotteManager _carotteManager;
 
-        public ProfileController(ILogger<ProfileController> logger, IDoListManager doListManager)
+        public ProfileController(ILogger<ProfileController> logger, ICarotteManager carotteManager)
         {
             _logger = logger;
-            _doListManager = doListManager;
+            _carotteManager = carotteManager;
         }
 
         [HttpGet(Name = "GetProfile")]
@@ -24,7 +24,7 @@ namespace DoList.API.Controllers
         {
             _logger.LogDebug("GetCurrentProfile");
 
-            var profile = _doListManager.CurrentProfile;
+            var profile = _carotteManager.GetProfile();
 
             if (profile == null)
             {

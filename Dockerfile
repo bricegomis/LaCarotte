@@ -10,15 +10,15 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["API/DoList.API/DoList.API.csproj", "."]
-RUN dotnet restore "./DoList.API.csproj"
-COPY ["API/DoList.API/", "."]
+COPY ["API/Carottes.API/Carottes.API.csproj", "."]
+RUN dotnet restore "./Carottes.API.csproj"
+COPY ["API/Carottes.API/", "."]
 WORKDIR "/src/."
-RUN dotnet build "./DoList.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Carottes.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./DoList.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Carottes.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Build stage for the frontend
 FROM node:22-alpine AS build-front
@@ -32,4 +32,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=build-front /app/dist/spa ./wwwroot
-ENTRYPOINT ["dotnet", "DoList.API.dll"]
+ENTRYPOINT ["dotnet", "Carottes.API.dll"]

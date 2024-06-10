@@ -1,15 +1,15 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace DoList.API.Models
+namespace carotte.API.Models
 {
     [BsonIgnoreExtraElements]
-    public class CarrotItem
+    public class Carotte
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
-        public string? Title { get; set; }
+        public required string Title { get; set; }
         public string? Desc { get; set; }
         public DateTimeOffset? DateCreated { get; set; }
         public DateTimeOffset? DateUpdated { get; set; }
@@ -19,5 +19,6 @@ namespace DoList.API.Models
         public string? Image { get; set; }
         public List<string>? Tags { get; set; } = [];
         public List<DateTimeOffset>? History { get; set; } = [];
+        public int? HistoryBonus { get; set; }
     }
 }

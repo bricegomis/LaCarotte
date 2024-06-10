@@ -3,7 +3,7 @@
     <div>
       <q-table
         title="Tasks"
-        :rows="doItemStore.doItems"
+        :rows="carotteStore.carottes"
         :columns="columns"
         row-key="id"
         :pagination="pagination"
@@ -12,7 +12,7 @@
           <q-btn
             color="primary"
             label="New Task"
-            @click="doItemStore.startEditingDoItem({})"
+            @click="carotteStore.startEditingCarotte({})"
           />
         </template>
         <template v-slot:body-cell-img="props">
@@ -29,7 +29,7 @@
               size="sm"
               icon="check"
               :class="{ invisible: props.row.isFinished == true }"
-              @click.stop="doItemStore.finishDoItem(props.row)"
+              @click.stop="carotteStore.finishCarotte(props.row)"
             />
             <q-btn
               flat
@@ -38,7 +38,7 @@
               color="grey"
               size="sm"
               icon="edit"
-              @click.stop="doItemStore.startEditingDoItem(props.row)"
+              @click.stop="carotteStore.startEditingCarotte(props.row)"
             />
             <q-btn
               flat
@@ -46,7 +46,7 @@
               size="sm"
               color="red"
               icon="delete"
-              @click.stop="doItemStore.deleteDoItem(props.row)"
+              @click.stop="carotteStore.deleteCarotte(props.row)"
             />
           </q-td>
         </template>
@@ -57,8 +57,8 @@
 </template>
 
 <script setup lang="ts">
-import { useDoItemStore } from 'src/stores/doItem-store';
-import { DoItem } from './models';
+import { useCarotteStore } from 'src/stores/carotte-store';
+import { Carotte } from './models';
 
 const pagination = {
   sortBy: 'title',
@@ -72,15 +72,15 @@ const columns = [
   {
     name: 'Title',
     label: 'Title',
-    field: (row: DoItem) => row.title,
+    field: (row: Carotte) => row.title,
   },
   { name: 'schedule', label: 'Schedule', field: 'schedule' },
   {
     name: 'points',
     label: 'Points',
-    field: (row: DoItem) => row.points,
+    field: (row: Carotte) => row.points,
   },
   { label: '', name: 'delete', field: 'delete' },
 ];
-const doItemStore = useDoItemStore();
+const carotteStore = useCarotteStore();
 </script>

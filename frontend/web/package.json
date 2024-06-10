@@ -2,7 +2,7 @@
   "name": "lacarotte-web",
   "version": "0.0.1",
   "description": "Another todo list manager",
-  "productName": "DoList App",
+  "productName": "Carottes App",
   "author": "brice <bricegomis@gmail.com>",
   "private": true,
   "scripts": {

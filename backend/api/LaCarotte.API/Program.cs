@@ -1,6 +1,6 @@
 using Serilog;
 
-namespace DoList.API
+namespace carotte.API
 {
     internal class Program
     {

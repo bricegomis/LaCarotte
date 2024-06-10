@@ -4,12 +4,12 @@
 </template>
 
 <script setup lang="ts">
-import { useDoItemStore } from 'src/stores/doItem-store';
+import { useCarotteStore } from 'src/stores/carotte-store';
 import { onMounted } from 'vue';
-import { useCarrotItemStore } from './stores/carrotItem-store';
+import { useCarotteStore } from './stores/carotte-store';
 
-const doItemStore = useDoItemStore();
-const carrotItemStore = useCarrotItemStore();
+const carotteStore = useCarotteStore();
+const carotteStore = useCarotteStore();
 
 defineOptions({
   name: 'App',
@@ -17,9 +17,9 @@ defineOptions({
 
 const loop = async () => {
   try {
-    await doItemStore.fetchProfile();
-    await doItemStore.fetchDoItems();
-    await carrotItemStore.fetchCarrotItems();
+    await carotteStore.fetchProfile();
+    await carotteStore.fetchCarottes();
+    await carotteStore.fetchCarottes();
   } catch (error) {
     // console.error('Error fetching items:', error);
   } finally {

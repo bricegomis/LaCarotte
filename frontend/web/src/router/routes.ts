@@ -3,19 +3,19 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    name: 'DoItems',
+    name: 'Carottes',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
         path: '',
-        name: 'doItem',
-        component: () => import('pages/DoItemPage.vue'),
+        name: 'carotte',
+        component: () => import('pages/CarottePage.vue'),
         meta: { transition: 'slide-left' },
       },
       {
         path: '',
-        name: 'carrot',
-        component: () => import('pages/CarrotPage.vue'),
+        name: 'carotte',
+        component: () => import('pages/CarottePage.vue'),
         meta: { transition: 'slide-right' },
       },
     ],

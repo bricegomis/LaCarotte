@@ -10,15 +10,15 @@
 // https://www.mongodb.com/docs/mongodb-vscode/playgrounds/
 
 // Select the database to use.
-use('DoList');
+use('carotte');
 
-db.getCollection('DoItems').updateMany({}, [
+db.getCollection('carotte').updateMany({}, [
     {
       $set: {
         "Schedule": "Daily"
       }
     },
     {
-      $unset: "DoItem"
+      $unset: "Carotte"
     }
   ])

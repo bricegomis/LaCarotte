@@ -1,10 +1,10 @@
 <template>
-  <q-dialog v-model="doItemStore.isEditingDoItemDialogVisible">
+  <q-dialog v-model="carotteStore.isEditingCarotteDialogVisible">
     <q-card class="q-pa-md">
       <q-card-section>
-        <q-input v-model="doItemStore.editingDoItem.title" label="Titre" />
+        <q-input v-model="carotteStore.editingCarotte.title" label="Titre" />
         <q-input
-          v-model.number="doItemStore.editingDoItem.points"
+          v-model.number="carotteStore.editingCarotte.points"
           type="number"
         />
         <q-knob
@@ -18,9 +18,9 @@
           track-color="lime-3"
           class="text-lime q-ma-md"
         />
-        <q-input v-model="doItemStore.editingDoItem.image" label="Image" />
+        <q-input v-model="carotteStore.editingCarotte.image" label="Image" />
         <q-input
-          v-model="doItemStore.editingDoItem.schedule"
+          v-model="carotteStore.editingCarotte.schedule"
           label="Schedule"
         />
       </q-card-section>
@@ -28,12 +28,12 @@
         <q-btn
           label="Cancel"
           color="negative"
-          @click="doItemStore.closeNewItemDialog"
+          @click="carotteStore.closeNewItemDialog"
         />
         <q-btn
           label="Save"
           color="primary"
-          @click="doItemStore.SaveEditingDoItem"
+          @click="carotteStore.SaveEditingCarotte"
         />
       </q-card-actions>
     </q-card>
@@ -41,18 +41,18 @@
 </template>
 
 <script setup lang="ts">
-import { useDoItemStore } from 'src/stores/doItem-store';
+import { useCarotteStore } from 'src/stores/carotte-store';
 import { computed } from 'vue';
 
-const doItemStore = useDoItemStore();
+const carotteStore = useCarotteStore();
 const points = computed({
   // getter
   get() {
-    return doItemStore.editingDoItem.points ?? 0;
+    return carotteStore.editingCarotte.points ?? 0;
   },
   // setter
   set(newValue) {
-    doItemStore.editingDoItem.points = newValue;
+    carotteStore.editingCarotte.points = newValue;
   },
 });
 </script>

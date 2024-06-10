@@ -1,13 +1,13 @@
 <template>
-  <q-page title="Carrot Items" style="background-color: #8ec8e4">
-    <carrot-item-list-cards />
+  <q-page title="Carotte Items" style="background-color: #8ec8e4">
+    <carotte-item-list-cards />
   </q-page>
 </template>
 
 <script setup lang="ts">
-import CarrotItemListCards from 'components/CarrotItemListCards.vue';
+import CarotteListCards from 'components/CarotteListCards.vue';
 
 defineOptions({
-  name: 'CarrotPage',
+  name: 'CarottePage',
 });
 </script>

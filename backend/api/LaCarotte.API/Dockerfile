@@ -10,17 +10,17 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src/api
-COPY ["DoList.API.csproj", "."]
-RUN dotnet restore "./DoList.API.csproj"
+COPY ["LaCarotte.API.csproj", "."]
+RUN dotnet restore "./LaCarotte.API.csproj"
 COPY . .
 WORKDIR "/src/api/."
-RUN dotnet build "./DoList.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./LaCarotte.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./DoList.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./LaCarotte.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DoList.API.dll"]
+ENTRYPOINT ["dotnet", "LaCarotte.API.dll"]

@@ -2,18 +2,18 @@
 <template>
   <div class="row justify-around">
     <div
-      v-for="carrotItem in carrotItems"
-      :key="carrotItem.id ?? ''"
+      v-for="carotte in carottes"
+      :key="carotte.id ?? ''"
       class="col-12 col-md-4 q-pa-xs"
     >
-      <q-card flat bordered v-if="carrotItem">
+      <q-card flat bordered v-if="carotte">
         <q-card-section horizontal class="justify-around items-center">
           <q-img
-            :src="carrotItem.image ?? ''"
+            :src="carotte.image ?? ''"
             class="bg-white col-2 q-ma-sm"
             width="50px"
           />
-          <div class="col-9">{{ carrotItem.title }}</div>
+          <div class="col-9">{{ carotte.title }}</div>
         </q-card-section>
         <q-separator />
 
@@ -22,7 +22,7 @@
             <q-btn
               flat
               icon="edit"
-              @click="carrotItemStore.startEditingCarrotItem(carrotItem)"
+              @click="carotteStore.startEditingCarotte(carotte)"
               >Edit</q-btn
             >
           </div>
@@ -30,19 +30,19 @@
             <q-rating
               class="q-px-sm"
               readonly
-              v-if="carrotItem.history && haveHistory(carrotItem)"
+              v-if="carotte.history && haveHistory(carotte)"
               color="negative"
               icon="thumb_up"
-              v-model="carrotItem.history.length"
+              v-model="carotte.history.length"
             />
             <q-btn
               color="negative"
               square
-              :disabled="isDisabled(carrotItem)"
+              :disabled="isDisabled(carotte)"
               class="q-ma-none score-container text-gray"
-              @click="carrotItemStore.finishCarrotItem(carrotItem)"
+              @click="carotteStore.finishCarotte(carotte)"
             >
-              <div>{{ carrotItem.points }} pts</div>
+              <div>{{ carotte.points }} pts</div>
             </q-btn>
           </div>
         </q-card-section>
@@ -52,27 +52,27 @@
 </template>
 
 <script setup lang="ts">
-import { useCarrotItemStore } from 'src/stores/carrotItem-store';
+import { useCarotteStore } from 'src/stores/carotte-store';
 import { computed } from 'vue';
-import { CarrotItem } from './models';
-import { useDoItemStore } from 'src/stores/doItem-store';
+import { Carotte } from './models';
+import { useCarotteStore } from 'src/stores/carotte-store';
 
-const doItemStore = useDoItemStore();
+const carotteStore = useCarotteStore();
 
-const carrotItemStore = useCarrotItemStore();
-const carrotItems = computed(() => {
-  return carrotItemStore.carrotItems
+const carotteStore = useCarotteStore();
+const carottes = computed(() => {
+  return carotteStore.carottes
     .slice()
     .sort((a, b) => (a.points ?? 0) - (b.points ?? 0));
 });
 
-const haveHistory = (item: CarrotItem) => {
+const haveHistory = (item: Carotte) => {
   return item.history?.length ?? 0 > 0;
 };
 
-const isDisabled = (item: CarrotItem) => {
+const isDisabled = (item: Carotte) => {
   return (
-    doItemStore.profile.scoreWeek <= (item.points ?? 0) ||
+    carotteStore.profile.scoreWeek <= (item.points ?? 0) ||
     (item.history?.length ?? 0) >= 5
   );
 };
