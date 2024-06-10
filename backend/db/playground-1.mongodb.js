@@ -10,15 +10,29 @@
 // https://www.mongodb.com/docs/mongodb-vscode/playgrounds/
 
 // Select the database to use.
-use('carotte');
+use('DoList');
 
-db.getCollection('carotte').updateMany({}, [
-    {
-      $set: {
-        "Schedule": "Daily"
-      }
-    },
-    {
-      $unset: "Carotte"
-    }
-  ])
+// db.getCollection('CarrotItems').updateMany({}, [
+//     {
+//       $set: {
+//         "IsReward": false
+//       }
+//     }
+//   ])
+// db.getCollection('DoItems').updateMany({}, [
+//     {
+//       $set: {
+//         "IsReward": true
+//       }
+//     }
+//   ])
+
+db.getSiblingDB('DoList').Carrots.find().forEach(function(doc) {
+  db.getSiblingDB('LaCarotte').Carrotes.insertOne(doc);
+});
+db.getSiblingDB('DoList').Profiles.find().forEach(function(doc) {
+  db.getSiblingDB('LaCarotte').Profiles.insertOne(doc);
+});
+// db.getSiblingDB('LaCarotte').CarrotItems.find().forEach(function(doc) {
+//   db.getSiblingDB('LaCarotte').Carrotes.insertOne(doc);
+// });

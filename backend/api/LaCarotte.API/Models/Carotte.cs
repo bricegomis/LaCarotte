@@ -13,6 +13,7 @@ namespace carotte.API.Models
         public string? Desc { get; set; }
         public DateTimeOffset? DateCreated { get; set; }
         public DateTimeOffset? DateUpdated { get; set; }
+        public bool? IsReward { get; set; }
         public int? Points { get; set; }
         [BsonRepresentation(BsonType.ObjectId)]
         public string? ProfileId { get; set; }

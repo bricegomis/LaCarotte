@@ -7,7 +7,6 @@ namespace carotte.API
         private static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
                 .WriteTo.Console()
                 .CreateLogger();
 

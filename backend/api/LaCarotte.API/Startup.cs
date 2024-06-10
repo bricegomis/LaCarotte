@@ -22,6 +22,7 @@ namespace carotte.API
             var login = Configuration["MongoDB:Login"];
             var password = Configuration["MongoDB:Password"];
             var dbName = Configuration["MongoDB:DbName"];
+            dbName = "LaCarotte";// TODO remove
             var connectionString = $"mongodb://{login}:{password}@{host}:{port}/";
 
             services.AddCors(options =>
@@ -34,28 +35,31 @@ namespace carotte.API
                 });
             });
 
-
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "carotte.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LaCarotte.API", Version = "v1" });
             });
 
             if (string.IsNullOrEmpty(host)
                 || string.IsNullOrEmpty(port)
+                || string.IsNullOrEmpty(dbName)
                 || string.IsNullOrEmpty(login)
                 || string.IsNullOrEmpty(password))
             {
-                throw new Exception("MongoDB credentials not configured");
+                throw new Exception("MongoDB configuration not found");
             }
 
             var loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog(Log.Logger));
             var datetimeProvider = new DateTimeProvider();
 
-            var mongoDBService = new MongoDBService(loggerFactory.CreateLogger<MongoDBService>(), datetimeProvider, connectionString, dbName);
+            var mongoDBService = new MongoDBService(loggerFactory.CreateLogger<MongoDBService>(),
+                                                    datetimeProvider,
+                                                    connectionString,
+                                                    dbName);
             services.AddSingleton<IMongoDBService>(mongoDBService);
-            
+
             var manager = new carotteManager(loggerFactory.CreateLogger<ICarotteManager>(),
                                             mongoDBService,
                                             datetimeProvider);
@@ -69,7 +73,7 @@ namespace carotte.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "carotte.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LaCarotte.API v1"));
             }
 
             app.UseCors();
@@ -77,7 +81,6 @@ namespace carotte.API
             var options = new DefaultFilesOptions();
             options.DefaultFileNames.Clear();
             options.DefaultFileNames.Add("index.html");
-            options.DefaultFileNames.Add("index.htm");
             app.UseDefaultFiles(options);
             app.UseStaticFiles();
 
