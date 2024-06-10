@@ -1,7 +1,7 @@
 {
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
@@ -9,7 +9,7 @@
       }
     },
     "Container (Dockerfile)": {
-      "commandName": "Project",
+      "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "environmentVariables": {

@@ -33,7 +33,7 @@ namespace carotte.API.Manager
             CurrentProfile = await _mongoDBService.GetProfile(Login);
             if (CurrentProfile == null)
             {
-                _logger.LogInformation("========================> CurrentProfilenull, creating new one");
+                _logger.LogInformation("========================> CurrentProfile null, creating new one");
                 await _mongoDBService.CreateProfile(new Profile
                 {
                     Login = Login,
@@ -46,12 +46,12 @@ namespace carotte.API.Manager
             }
             else
             {
-                _logger.LogInformation("========================> CurrentProfilenull found, updating dateLastConnection");
+                _logger.LogInformation("========================> CurrentProfile found, updating dateLastConnection");
                 CurrentProfile.DateLastConnection = _dateTimeProvider.GetNow();
                 await _mongoDBService.UpdateProfile(CurrentProfile);
             }
 
-            _logger.LogInformation("========================> CurrentProfilenull finished");
+            _logger.LogInformation("========================> CurrentProfile init finished");
         }
 
         public async Task FinishCarotte(Carotte carotteFrom)
