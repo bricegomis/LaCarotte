@@ -1,7 +1,7 @@
-﻿using carotte.API.Models;
+﻿using LaCarotte.API.Models;
 using MongoDB.Driver;
 
-namespace carotte.API.Services
+namespace LaCarotte.API.Services
 {
     public class MongoDBService : IMongoDBService
     {

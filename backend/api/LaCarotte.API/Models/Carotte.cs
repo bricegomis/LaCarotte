@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace carotte.API.Models
+namespace LaCarotte.API.Models
 {
     [BsonIgnoreExtraElements]
     public class Carotte

@@ -1,7 +1,7 @@
-﻿using carotte.API.Models;
-using carotte.API.Services;
+﻿using LaCarotte.API.Models;
+using LaCarotte.API.Services;
 
-namespace carotte.API.Manager
+namespace LaCarotte.API.Manager
 {
     public class carotteManager(ILogger<ICarotteManager> logger,
                                IMongoDBService mongoDBService,

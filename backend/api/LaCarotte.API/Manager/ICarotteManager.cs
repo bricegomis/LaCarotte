@@ -1,6 +1,6 @@
-using carotte.API.Models;
+using LaCarotte.API.Models;
 
-namespace carotte.API.Manager
+namespace LaCarotte.API.Manager
 {
     public interface ICarotteManager
     {

@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace carotte.API.Models
+namespace LaCarotte.API.Models
 {
     public enum ScheduleType
     {

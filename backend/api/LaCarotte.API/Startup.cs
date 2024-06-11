@@ -1,9 +1,9 @@
-using carotte.API.Manager;
-using carotte.API.Services;
+using LaCarotte.API.Manager;
+using LaCarotte.API.Services;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
-namespace carotte.API
+namespace LaCarotte.API
 {
     public class Startup
     {

@@ -1,6 +1,6 @@
-using carotte.API.Models;
+using LaCarotte.API.Models;
 
-namespace carotte.API.Services
+namespace LaCarotte.API.Services
 {
     public interface IMongoDBService
     {

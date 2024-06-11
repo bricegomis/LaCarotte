@@ -1,6 +1,6 @@
 using Serilog;
 
-namespace carotte.API
+namespace LaCarotte.API
 {
     internal class Program
     {

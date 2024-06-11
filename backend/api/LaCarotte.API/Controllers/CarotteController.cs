@@ -1,10 +1,10 @@
-using carotte.API.Manager;
-using carotte.API.Models;
+using LaCarotte.API.Manager;
+using LaCarotte.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Diagnostics;
 
-namespace carotte.API.Controllers
+namespace LaCarotte.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
