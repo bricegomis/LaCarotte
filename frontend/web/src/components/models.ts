@@ -5,6 +5,7 @@ export interface Carotte {
   dateCreated?: string | null;
   dateUpdated?: string | null;
   points?: number;
+  isReward?: boolean | null;
   profileId?: string | null;
   dateFinished?: string | null;
   image?: string | null;
