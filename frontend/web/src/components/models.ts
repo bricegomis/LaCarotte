@@ -5,27 +5,12 @@ export interface Carotte {
   dateCreated?: string | null;
   dateUpdated?: string | null;
   points?: number;
-  isFinished?: boolean | null;
   profileId?: string | null;
   dateFinished?: string | null;
   image?: string | null;
-  images?: string[] | null;
   tags?: string[] | null;
-  schedule?: string;
+  history?: string[] | null;
   historyBonus?: number | null;
-}
-
-export interface Carotte {
-  id?: string | null;
-  title?: string | null;
-  desc?: string | null;
-  dateCreated?: string | null;
-  dateUpdated?: string | null;
-  points?: number | null;
-  profileId?: string | null;
-  image?: string | null;
-  tags?: string[] | null;
-  history?: [] | null;
 }
 
 export interface Profile {

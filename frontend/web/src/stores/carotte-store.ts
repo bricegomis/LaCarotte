@@ -23,7 +23,7 @@ export const useCarotteStore = defineStore('carotte', {
     },
     async fetchCarottes() {
       try {
-        const response = await api.get('Carotte');
+        const response = await api.get('carotte');
         this.carottes = response.data;
       } catch (error) {
         //console.error('Error fetching Carottes:', error);
@@ -31,7 +31,7 @@ export const useCarotteStore = defineStore('carotte', {
     },
     async createCarotte(carotte: Carotte) {
       try {
-        await api.post('Carotte', carotte);
+        await api.post('carotte', carotte);
         await this.fetchCarottes();
       } catch (error) {
         console.error('Error creating Carotte:', error);
@@ -42,7 +42,7 @@ export const useCarotteStore = defineStore('carotte', {
         if (carotte.id)
           // TODO use carotte ?
           // => editing
-          await api.put('Carotte', carotte);
+          await api.put('carotte', carotte);
         // => new
         else await api.post('Carotte', carotte);
         await this.fetchCarottes();
@@ -52,7 +52,7 @@ export const useCarotteStore = defineStore('carotte', {
     },
     async deleteCarotte(carotte: Carotte) {
       try {
-        await api.delete(`Carotte/${carotte.id}`);
+        await api.delete(`carotte/${carotte.id}`);
         await this.fetchCarottes();
       } catch (error) {
         console.error('Error deleting Carotte:', error);
@@ -60,7 +60,7 @@ export const useCarotteStore = defineStore('carotte', {
     },
     async finishCarotte(carotte: Carotte) {
       try {
-        await api.put('Carotte/finish', carotte);
+        await api.put('carotte/finish', carotte);
         await this.fetchCarottes();
       } catch (error) {
         console.error('Error when finishing a carotte :', error);
