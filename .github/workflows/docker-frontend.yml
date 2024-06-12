@@ -18,7 +18,8 @@ jobs:
 
       - name: Build the Docker image for frontend
         run: |
-          docker build --platform linux/amd64 -t ${{ github.repository }}/lacarotte-web:latest /frontend/web/
+          cd frontend/web/
+          docker build -t ${{ github.repository }}/lacarotte-web:latest .
 
       - name: Login to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
