@@ -1,5 +1,6 @@
 ﻿using LaCarotte.API.Models;
 using LaCarotte.API.Services;
+using MongoDB.Driver.Core.Clusters.ServerSelectors;
 
 namespace LaCarotte.API.Manager
 {
@@ -82,8 +83,11 @@ namespace LaCarotte.API.Manager
             carotte.History.Add(_dateTimeProvider.GetNow());
             carotte.HistoryBonus += 1;// TODO: reduce if bad ?
 
-            CurrentProfile.ScoreTotal += carotte.Points ?? 0;
-            CurrentProfile.ScoreWeek += carotte.Points ?? 0;
+            if (carotte.Points.HasValue) {
+                var pts = carotte.IsReward == true ? carotte.Points.Value : -carotte.Points.Value;
+                CurrentProfile.ScoreTotal += pts;
+                CurrentProfile.ScoreWeek += pts;
+            }
 
             await _mongoDBService.UpdateCarotte(carotte);
             await _mongoDBService.UpdateProfile(CurrentProfile);
