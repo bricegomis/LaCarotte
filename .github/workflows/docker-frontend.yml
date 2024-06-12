@@ -18,7 +18,6 @@ jobs:
 
       - name: Build the Docker image for frontend
         run: |
-          cd frontend/web/
           docker build --platform linux/amd64 -t ${{ github.repository }}/lacarotte-web:latest /frontend/web/
 
       - name: Login to GitHub Container Registry
