@@ -8,21 +8,27 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
 
-      - name: Build the Docker image for frontend
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
         run: |
           cd frontend/web/
-          docker build -t ${{ github.repository }}/lacarotte-web:latest .
+          docker build -t ${{ github.repository_owner }}/lacarotte-web:latest .
 
-      - name: Login to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Push Docker image to GitHub Container Registry
-        run: docker push ghcr.io/${{ github.repository }}/lacarotte-web:latest
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/lacarotte-web:latest

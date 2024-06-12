@@ -6,7 +6,7 @@ on:
       - 'backend/api/**'
 
 jobs:
-  build-and-publish:
+  build-and-push:
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -23,11 +23,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build .NET app
-        run: |
-          cd backend/api/LaCarotte.API
-          dotnet build --configuration Release
 
       - name: Build Docker image
         run: |
