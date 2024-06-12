@@ -1,0 +1,28 @@
+name: LaCarotte.Web Docker Publish
+
+on:
+  push:
+    paths:
+      - 'frontend/web/**'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build the Docker image for frontend
+        run: |
+          cd frontend/web/
+          docker build --platform linux/amd64 -t ${{ github.repository }}/lacarotte-web:latest /frontend/web/
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push Docker image to GitHub Container Registry
+        run: docker push ghcr.io/${{ github.repository }}/lacarotte-web:latest
