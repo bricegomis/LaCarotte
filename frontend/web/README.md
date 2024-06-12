@@ -1,6 +1,6 @@
 # Carottes App (lacarotte-client-web)
 
-Another todo list manager
+Another todo list manager 
 
 ## Install the dependencies
 ```bash
