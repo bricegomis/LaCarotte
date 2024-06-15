@@ -12,14 +12,18 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary   : #FFCA49;
-$secondary : #CDA291;
-$accent    : #402E32;
+// src/css/quasar.variables.sass
+$primary   : #ff7700; // Orange carotte vif
+$secondary : #FFD700; // Jaune vif
+$accent    : #ffffff; // Rouge vif
 
-$dark      : #1D1D1D;
-$dark-page : #CDA291;
+$dark      : #A0522D; // Marron foncé
+$dark-page : #2F4F4F; // Gris ardoise foncé
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
+$positive  : #32CD32; // Vert lime
+$negative  : #e60101; // Violet
+$info      : #00BFFF; // Bleu clair
+$warning   : #FF8C00; // Orange vif
+
+
+$generic-border-radius: 20px;

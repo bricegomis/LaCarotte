@@ -1,70 +1,84 @@
 <!-- eslint-disable vue/valid-v-model -->
 <template>
-  <div class="row justify-around">
-    <div
-      v-for="carotte in carottes"
-      :key="carotte.id ?? ''"
-      class="col-12 col-md-4 q-pa-xs"
-    >
-      <q-card flat bordered v-if="carotte">
-        <q-card-section horizontal class="justify-around items-center">
-          <q-img
-            :src="carotte.image ?? ''"
-            class="bg-white col-2 q-ma-sm"
-            width="50px"
-          />
-          <div class="col-9">{{ carotte.title }}</div>
-        </q-card-section>
-        <q-separator />
+  <q-card class="my-card q-pa-none" flat bordered>
+    <q-card-section horizontal class="row items-center content-stretch background-gray">
+      <q-img
+        :src="carotte.image ?? ''"
+        class="rounded-image bg-white"
+        style="width: 50px; height: 50px"
+      />
+      <div class="q-ml-md col text-left">
+        <div class="text-weight-bold text-capitalize">{{ carotte.title }}</div>
+        <div class="text- text-italic">{{ carotte.desc }}</div>
+      </div>
 
-        <q-card-section horizontal class="row justify-between items-center">
-          <div class="">
-            <q-btn
-              flat
-              icon="edit"
-              @click="carotteStore.startEditingCarotte(carotte)"
-              >Edit</q-btn
-            >
-          </div>
-          <div>
-            <span class="text-caption text-grey">
-              {{ carotte.history?.length ?? 0 }}x
-            </span>
-            <q-btn
-              :color="carotte.isReward ? 'positive' : 'negative'"
-              square
-              :disabled="isDisabled(carotte)"
-              class="q-ma-none score-container text-gray"
-              @click="carotteStore.finishCarotte(carotte)"
-            >
-              <div>{{ carotte.points }} pts</div>
-            </q-btn>
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
-  </div>
+      <div class="col-auto row items-center self-stretch q-ml-md">
+        <div class="col">
+          <span class="text-caption text-grey">
+            x{{ carotte.history?.length ?? 0 }}
+          </span>
+        </div>
+        <q-btn
+          :color="carotte.isReward ? 'positive' : 'negative'"
+          :disabled="isDisabled(carotte)"
+          class="q-ml-sm self-stretch text-gray"
+          @click="carotteStore.finishCarotte(carotte)"
+          :style="{ borderRadius: '0 10px 10px 0' }"
+        >
+          <div>{{ carotte.points }} pts</div>
+        </q-btn>
+      </div>
+    </q-card-section>
+
+    <!-- <q-card-section horizontal class="row justify-between items-center">
+      <div class="">
+        <q-btn flat icon="edit" :href="`/carotte/${carotte.id}`">Edit</q-btn>
+      </div>
+    </q-card-section> -->
+  </q-card>
 </template>
 
 <script setup lang="ts">
 import { useCarotteStore } from 'src/stores/carotte-store';
-import { computed } from 'vue';
-import { Carotte } from './models';
+import { Carotte } from 'src/models/Carotte';
+import { ref } from 'vue';
 
 const carotteStore = useCarotteStore();
 
-const carottes = computed(() => {
-  return carotteStore.carottes
-    .slice()
-    .sort((a, b) => (a.points ?? 0) - (b.points ?? 0));
+const props = defineProps({
+  carotte: { type: Object, required: true },
 });
-
+const carotte = ref(props.carotte as Carotte);
 // const haveHistory = (item: Carotte) => {
 //   return item.history?.length ?? 0 > 0;
 // };
 
 const isDisabled = (item: Carotte) => {
-  return carotteStore.profile.scoreWeek <= (item.points ?? 0);
+  if (item.history != null) {
+    var lastDate = new Date(item.history[item.history.length - 1]);
+    var time = getMinutesDifference(lastDate);
+    if (time < 2) return true;
+  }
+  if (!item.isReward)
+    return carotteStore.profile.scoreDay <= (item.points ?? 0);
+
+  return false;
+};
+
+const getMinutesDifference = (date: Date): number => {
+  // Obtenir l'heure actuelle en millisecondes
+  const now = new Date().getTime();
+
+  // Obtenir l'heure de la date donnée en millisecondes
+  const givenDate = date.getTime();
+
+  // Calculer la différence en millisecondes
+  const diffInMilliseconds = now - givenDate;
+
+  // Convertir la différence en minutes
+  const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+
+  return diffInMinutes;
 };
 </script>
 

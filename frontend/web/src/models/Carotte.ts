@@ -13,14 +13,3 @@ export interface Carotte {
   history?: string[] | null;
   historyBonus?: number | null;
 }
-
-export interface Profile {
-  id: string;
-  login: string;
-  scoreTotal: number;
-  scoreWeek: number;
-  carottesIds: string[];
-  carottes: Carotte[];
-  dateLastConnection: string;
-  dateCreated: string;
-}

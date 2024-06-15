@@ -13,7 +13,7 @@
         />
         -->
 
-        <q-toolbar-title class="text-black">
+        <q-toolbar-title class="text-accent">
           La Carotte
           <q-icon
             color="red"
@@ -23,7 +23,7 @@
         /></q-toolbar-title>
 
         <div class="row text-h6 text-black justify-around items-center">
-          <div>{{ carotteStore.profile?.scoreWeek }}</div>
+          <div>{{ carotteStore.profile?.scoreDay }}</div>
           <div>
             <q-avatar size="24px">
               <q-img src="/img/LaCarotte.jpg" ratio="1" />

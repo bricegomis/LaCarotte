@@ -87,6 +87,7 @@ namespace LaCarotte.API.Manager
                 var pts = carotte.IsReward == true ? carotte.Points.Value : -carotte.Points.Value;
                 CurrentProfile.ScoreTotal += pts;
                 CurrentProfile.ScoreWeek += pts;
+                CurrentProfile.ScoreDay += pts;
             }
 
             await _mongoDBService.UpdateCarotte(carotte);

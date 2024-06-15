@@ -8,29 +8,31 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        name: 'carotte',
-        component: () => import('pages/CarottePage.vue'),
+        name: 'carottes',
+        component: () => import('pages/CarottesPage.vue'),
         meta: { transition: 'slide-left' },
       },
       {
-        path: '',
+        path: 'carotte/:id',
         name: 'carotte',
         component: () => import('pages/CarottePage.vue'),
         meta: { transition: 'slide-right' },
       },
     ],
   },
-  // {
-  //   path: '/templates',
-  //   name: 'templates',
-  //   component: () => import('layouts/MainLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/TemplatesPage.vue') },
-  //   ],
-  // },
-
-  // Always leave this as last one,
-  // but you can also remove it
+  {
+    path: '/scanner',
+    name: 'Scanner',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '/scanner',
+        name: 'scanner',
+        component: () => import('pages/ScannerPage.vue'),
+        meta: { transition: 'slide-left' },
+      },
+    ],
+  },
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { Carotte, Profile } from 'components/models';
+import { Carotte } from 'src/models/Carotte';
+import { Profile } from 'src/models/Profile';
 import { api } from 'boot/axios';
 
 export const useCarotteStore = defineStore('carotte', {
@@ -27,6 +28,16 @@ export const useCarotteStore = defineStore('carotte', {
         this.carottes = response.data;
       } catch (error) {
         //console.error('Error fetching Carottes:', error);
+      }
+    },
+    async getCarotte(id: string) {
+      try {
+        console.log('api.getCarotte', id);
+        const response = await api.get(`carotte/${id}`);
+        this.editingCarotte = response.data;
+        console.log('this.editingCarrote', this.editingCarotte);
+      } catch (error) {
+        console.error('Error fetching Carotte:', error);
       }
     },
     async createCarotte(carotte: Carotte) {

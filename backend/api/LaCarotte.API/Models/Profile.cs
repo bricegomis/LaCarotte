@@ -12,6 +12,7 @@ namespace LaCarotte.API.Models
         public required string Login { get; set; }
         public double ScoreTotal { get; set; }
         public double ScoreWeek { get; set; }
+        public double ScoreDay { get; set; }
         public List<string> carotteIds { get; set; } = [];
         [BsonIgnore]
         public List<Carotte>? carotte { get; set; }
