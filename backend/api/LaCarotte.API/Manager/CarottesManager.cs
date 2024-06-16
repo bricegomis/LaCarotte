@@ -1,15 +1,16 @@
 ﻿using LaCarotte.API.Models;
 using LaCarotte.API.Services;
-using MongoDB.Driver.Core.Clusters.ServerSelectors;
 
 namespace LaCarotte.API.Manager
 {
-    public class carotteManager(ILogger<ICarotteManager> logger,
+    public class CarotteManager(ILogger<ICarotteManager> logger,
                                IMongoDBService mongoDBService,
+                               IHistoryItemService historyItemService,
                                IDateTimeProvider dateTimeProvider) : BackgroundService, ICarotteManager
     {
         private const string Login = "Test";
         private readonly IMongoDBService _mongoDBService = mongoDBService;
+        private readonly IHistoryItemService _historyItemService = historyItemService;
         private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
         private readonly ILogger<ICarotteManager> _logger = logger;
         public Profile? CurrentProfile { get; set; }
@@ -92,6 +93,13 @@ namespace LaCarotte.API.Manager
 
             await _mongoDBService.UpdateCarotte(carotte);
             await _mongoDBService.UpdateProfile(CurrentProfile);
+
+            await _historyItemService.AddHistoryItem(new HistoryItem
+            {
+                Date = _dateTimeProvider.GetNow(),
+                Item = carotte,
+                Points = carotte.IsReward == true ? carotte.Points ?? 0 : -carotte.Points ?? 0
+            });
         }
 
         public async Task UpdateCarotte(Carotte carotte)

@@ -1,6 +1,7 @@
 using LaCarotte.API.Manager;
 using LaCarotte.API.Services;
 using Microsoft.OpenApi.Models;
+using Nest;
 using Serilog;
 
 namespace LaCarotte.API
@@ -60,11 +61,22 @@ namespace LaCarotte.API
                                                     dbName);
             services.AddSingleton<IMongoDBService>(mongoDBService);
 
-            var manager = new carotteManager(loggerFactory.CreateLogger<ICarotteManager>(),
+            var connectionSettings = new ConnectionSettings(new Uri("http://localhost:9200"))
+                                        .DefaultIndex("history-items");
+            var elasticClient = new ElasticClient(connectionSettings);
+            services.AddSingleton<IElasticClient>(elasticClient);
+
+            var historyItemService = new HistoryItemService(elasticClient);
+            services.AddSingleton<IHistoryItemService>(historyItemService);
+
+            var manager = new CarotteManager(loggerFactory.CreateLogger<ICarotteManager>(),
                                             mongoDBService,
+                                            historyItemService,
                                             datetimeProvider);
             services.AddSingleton<ICarotteManager>(manager);
             services.AddSingleton<IHostedService>(provider => manager);
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

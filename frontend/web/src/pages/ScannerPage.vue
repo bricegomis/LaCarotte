@@ -1,6 +1,8 @@
 <template>
-  <q-page title="Scanner">
-    <div class="row">
+  <q-page title="Scanner" class="row">
+    <div style="display: none">
+      <scanner-card />
+      <div class="row">
       <div
         v-for="test in tests"
         :key="test"
@@ -18,12 +20,13 @@
         {{ test }}
       </div>
     </div>
-    <!-- <scanner-card /> -->
+    </div>
+    
   </q-page>
 </template>
 
 <script setup lang="ts">
-// import ScannerCard from 'components/ScannerCard.vue'
+import ScannerCard from 'components/ScannerCard.vue'
 
 const tests = [
   'primary',

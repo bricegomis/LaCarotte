@@ -43,17 +43,16 @@ const tags = ['All'];
 
 const distinct = <T>(array: T[]): T[] => {
   return array.filter((item, index) => array.indexOf(item) === index);
-}
+};
 
 let allTags = carotteStore.carottes
-                  .filter(carotte => carotte.tags != null)
-                  .map(carotte => carotte.tags)
-                  .flat()
-                  .filter(tag => tag != null && tag != undefined);
+  .filter((carotte) => carotte.tags != null)
+  .map((carotte) => carotte.tags)
+  .flat()
+  .filter((tag) => tag != null && tag != undefined);
 allTags = distinct(allTags);
-allTags.forEach(tag => {
-  if (tag != null && tag != undefined)
-    tags.push(tag);
+allTags.forEach((tag) => {
+  if (tag != null && tag != undefined) tags.push(tag);
 });
 
 const orderOptions = ref([
@@ -70,7 +69,7 @@ const carottes = computed(() => {
   }
 
   result.sort((a, b) => {
-    console.log(Number(b.isReward))
+    // console.log(Number(b.isReward))
     return Number(b.isReward) - Number(a.isReward);
   });
 

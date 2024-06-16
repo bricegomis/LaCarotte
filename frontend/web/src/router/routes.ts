@@ -34,6 +34,19 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
+    path: '/stats',
+    name: 'Stats',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '/stats',
+        name: 'stats',
+        component: () => import('pages/StatsPage.vue'),
+        meta: { transition: 'slide-left' },
+      },
+    ],
+  },
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
