@@ -6,6 +6,7 @@ namespace LaCarotte.API.Services
     {
         Task AddHistoryItem(HistoryItem item);
         Task<IList<HistoryItem>> ListHistoryItems();
+        Task CreateOldHIstory(List<Carotte> carottes);
     }
 
 }

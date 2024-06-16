@@ -25,41 +25,22 @@ namespace LaCarotte.API.Services
             return [.. searchResponse.Documents];
         }
 
-        // public IList<HistoryItemByDay> GetHistoryItemsByDay()
-        // {
-        //     var searchResponse = _elasticClient.Search<HistoryItem>(s => s
-        //         .Aggregations(agg => agg
-        //             .DateHistogram("by_day", dh => dh
-        //                 .Field(f => f.Date)
-        //                 .CalendarInterval(DateMathTimeUnit.Day)
-        //                 .Aggregations(childAgg => childAgg
-        //                     .Terms("items", t => t
-        //                         .Field(f => f.Item)
-        //                         .Size(10000)
-        //                     )
-        //                 )
-        //             )
-        //         )
-        //     );
+        public async Task CreateOldHIstory(List<Carotte> carottes)
+        {
+            foreach(var carotte in carottes)
+            {
+                if (carotte.History == null) continue;
 
-        //     var buckets = searchResponse.Aggregations.DateHistogram("by_day").Buckets;
-        //     var result = new List<HistoryItemByDay>();
-
-        //     foreach (var bucket in buckets)
-        //     {
-        //         var day = bucket.Key;
-        //         var items = bucket.Terms("items").Buckets.Select(b => b.Key).ToList();
-        //         result.Add(new HistoryItemByDay { Day = day, Items = items });
-        //     }
-
-        //     return result;
-        // }
+                foreach (var date in carotte.History)
+                {
+                    await _elasticClient.IndexDocumentAsync(new HistoryItem
+                    {
+                        Date = date,
+                        Item = carotte,
+                        Points = carotte.IsReward == true ? carotte.Points ?? 0 : -carotte.Points ?? 0
+                    });
+                }
+            }
+        }
     }
-
-    public class HistoryItemByDay
-    {
-        public DateTime Day { get; set; }
-        public IList<string> Items { get; set; }
-    }
-
 }

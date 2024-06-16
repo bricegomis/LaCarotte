@@ -1,5 +1,6 @@
 using LaCarotte.API.Manager;
 using LaCarotte.API.Models;
+using LaCarotte.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Diagnostics;
@@ -28,12 +29,12 @@ namespace LaCarotte.API.Controllers
             stopwatch.Start();
 
             _logger.LogDebug("GetcarotteAsync start");
-            var carotte = await _carotteManager.GetAllCarottes();
+            var carottes = await _carotteManager.GetAllCarottes();
 
             stopwatch.Stop();
             _logger.LogDebug("GetcarotteAsync: {stopwatch.ElapsedMilliseconds} ms", stopwatch.ElapsedMilliseconds);
 
-            return carotte;
+            return carottes;
         }
 
         [HttpGet("{id}", Name = "GetById")]
