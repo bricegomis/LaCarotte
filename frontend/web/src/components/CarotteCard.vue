@@ -1,7 +1,15 @@
 <!-- eslint-disable vue/valid-v-model -->
 <template>
-  <q-card class="my-card q-pa-none" flat bordered>
-    <q-card-section horizontal class="row items-center content-stretch background-gray">
+  <q-card
+    class="my-card q-pa-none"
+    style="background-color: #6b697f; color: white"
+    flat
+    bordered
+  >
+    <q-card-section
+      horizontal
+      class="row items-center content-stretch background-gray"
+    >
       <q-img
         :src="carotte.image ?? ''"
         class="rounded-image bg-white"
