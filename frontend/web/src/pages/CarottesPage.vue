@@ -62,7 +62,7 @@ const tags = [
     classes: 'bg-negative',
   },
   {
-    name: 'celebration',
+    name: 'fiesta',
     icon: 'celebration',
     label: 'Fiesta',
     classes: 'bg-negative',
