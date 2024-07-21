@@ -94,12 +94,17 @@ namespace LaCarotte.API.Manager
             await _mongoDBService.UpdateCarotte(carotte);
             await _mongoDBService.UpdateProfile(CurrentProfile);
 
-            await _historyItemService.AddHistoryItem(new HistoryItem
+            var history = new HistoryItem
             {
-                Date = _dateTimeProvider.GetNow(),
                 Item = carotte,
-                Points = carotte.IsReward == true ? carotte.Points ?? 0 : -carotte.Points ?? 0
-            });
+                Date = _dateTimeProvider.GetNow(),
+                Points = carotte.IsReward == true ? carotte.Points ?? 0 : -carotte.Points ?? 0,
+                ProfileId = CurrentProfile.Id
+            };
+            await _mongoDBService.CreateHistory(history);
+
+            // To Elastic
+            await _historyItemService.AddHistoryItem(history);
         }
 
         public async Task UpdateCarotte(Carotte carotte)

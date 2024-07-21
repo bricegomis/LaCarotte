@@ -14,5 +14,8 @@ namespace LaCarotte.API.Services
         Task CreateProfile(Profile profile);
         Task<bool> UpdateProfile(Profile profile);
         Task<bool> DeleteProfile(Profile profile);
+
+        Task CreateHistory(HistoryItem history);
+        Task<List<HistoryItem>> GetAllHistoryItems(string profileId);
     }
 }

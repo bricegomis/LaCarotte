@@ -7,6 +7,7 @@ namespace LaCarotte.API.Services
     {
         private readonly IMongoCollection<Carotte> _carotteCollection;
         private readonly IMongoCollection<Profile> _profileCollection;
+        private readonly IMongoCollection<HistoryItem> _historyCollection;
         private readonly MongoClient _client;
 
         private readonly ILogger _logger;
@@ -22,11 +23,13 @@ namespace LaCarotte.API.Services
             _client = new MongoClient(connectionString);
 
             string carotteCollectionName = "Carrotes";
+            string historyCollectionName = "HistoryItems";
             string profileCollectionName = "Profiles";
 
             var database = _client.GetDatabase(dbName);
             _profileCollection = database.GetCollection<Profile>(profileCollectionName);
             _carotteCollection = database.GetCollection<Carotte>(carotteCollectionName);
+            _historyCollection = database.GetCollection<HistoryItem>(historyCollectionName);
         }
 
         public async Task<List<Carotte>> GetAllCarottes(string profileId)
@@ -57,6 +60,18 @@ namespace LaCarotte.API.Services
         public async Task DeleteCarotte(string id)
         {
             await _carotteCollection.DeleteOneAsync(x => x.Id == id);
+        }
+
+        public async Task CreateHistory(HistoryItem historyItem)
+        {
+            await _historyCollection.InsertOneAsync(historyItem);
+        }
+
+        public async Task<List<HistoryItem>> GetAllHistoryItems(string profileId)
+        {
+            var carotteCursor = await _historyCollection.FindAsync(_ => _.ProfileId == profileId);
+            var list = await carotteCursor.ToListAsync();
+            return list;
         }
 
         #region Profiles

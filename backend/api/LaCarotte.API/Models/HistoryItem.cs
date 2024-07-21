@@ -6,5 +6,6 @@ namespace LaCarotte.API.Models
         public DateTimeOffset Date { get; set; }
         public Carotte Item { get; set; }
         public double Points { get; set; }
+        public string? ProfileId { get; set; }
     }
 }
