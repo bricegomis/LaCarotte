@@ -20,16 +20,8 @@
         <q-input v-model="carotte.image" label="Image" />
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn
-          label="Cancel"
-          color="negative"
-          @click="goBack"
-        />
-        <q-btn
-          label="Save"
-          color="primary"
-          @click="carotteStore.SaveEditingCarotte"
-        />
+        <q-btn label="Cancel" color="negative" @click="goBack" />
+        <q-btn label="Save" color="primary" @click="onSave" />
       </q-card-actions>
     </q-card>
   </q-page>
@@ -47,15 +39,17 @@ const route = useRoute();
 const router = useRouter();
 
 const carotteId = route.params.id as string;
-console.log('carotteId', carotteId);
 
 const carotte = ref<Carotte>({});
-console.log('ref ok');
 
 const goBack = () => {
   router.back();
 };
 
+const onSave = () => {
+  carotteStore.updateCarotte(carotte.value);
+  router.back();
+};
 // const points = computed({
 //   // getter
 //   get() {
@@ -72,9 +66,7 @@ defineOptions({
 });
 
 onMounted(async () => {
-  console.log('mounted');
   await carotteStore.getCarotte(carotteId);
   carotte.value = carotteStore.editingCarotte;
-  console.log('carotte', carotte.value);
 });
 </script>

@@ -5,21 +5,24 @@
     style="background-color: #6b697f; color: white"
     flat
     bordered
+    v-on:click="router.push({ name: 'carotte', params: { id: carotte.id } })"
   >
     <q-card-section
       horizontal
       class="row items-center content-stretch background-gray"
     >
-      <q-img
-        :src="carotte.image ?? ''"
-        class="rounded-image bg-white"
-        style="width: 50px; height: 50px"
+      <q-icon
+        class="q-mx-sm"
+        :name="carotte.image ?? 'win'"
+        :color="carotte.isReward ? 'positive' : 'negative'"
+        size="md"
       />
-      <div class="q-ml-md col text-left">
-        <div class="text-weight-bold text-capitalize">{{ carotte.title }}</div>
+      <div class="col text-left">
+        <div class="text-weight-bold text-capitalize">
+          {{ carotte.title }}
+        </div>
         <div class="text- text-italic">{{ carotte.desc }}</div>
       </div>
-
       <div class="col-auto row items-center self-stretch q-ml-md">
         <div class="col">
           <span class="text-caption text-grey">
@@ -49,9 +52,11 @@
 <script setup lang="ts">
 import { useCarotteStore } from 'src/stores/carotte-store';
 import { Carotte } from 'src/models/Carotte';
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 
 const carotteStore = useCarotteStore();
+const router = useRouter();
 
 const props = defineProps({
   carotte: { type: Object, required: true },

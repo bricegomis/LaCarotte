@@ -1,6 +1,6 @@
 <template>
-  <q-page title="Carottes" style="background-color: #2b2a33">
-    <q-tabs v-model="tag" inline-label class="text-white shadow-2">
+  <q-page title="Carottes">
+    <q-tabs v-model="currentTag" inline-label class="text-white shadow-2">
       <q-tab
         v-for="tag in tags"
         :key="tag.name"
@@ -68,7 +68,7 @@ const tags = [
     classes: 'bg-negative',
   },
 ];
-const tag = ref(tags[0].name);
+const currentTag = ref(tags[0].name);
 
 // const distinct = <T>(array: T[]): T[] => {
 //   return array.filter((item, index) => array.indexOf(item) === index);
@@ -91,9 +91,9 @@ const tag = ref(tags[0].name);
 const carottes = computed(() => {
   let result = carotteStore.carottes.slice();
 
-  if (tag.value != 'all') {
+  if (currentTag.value != 'all') {
     result = result.filter(
-      (carotte) => carotte.tags && carotte.tags.indexOf(tag.value) >= 0
+      (carotte) => carotte.tags && carotte.tags.indexOf(currentTag.value) >= 0
     );
   }
 

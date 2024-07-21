@@ -77,18 +77,6 @@ export const useCarotteStore = defineStore('carotte', {
         console.error('Error when finishing a carotte :', error);
       }
     },
-    async startEditingCarotte(carotte: Carotte) {
-      if (carotte) this.editingCarotte = carotte;
-      else this.editingCarotte = {};
-      this.isEditingCarotteDialogVisible = true;
-    },
-    async SaveEditingCarotte() {
-      await this.updateCarotte(this.editingCarotte);
-      this.isEditingCarotteDialogVisible = false;
-    },
-    async closeNewItemDialog() {
-      this.isEditingCarotteDialogVisible = false;
-    },
   },
   persist: {
     enabled: true,
