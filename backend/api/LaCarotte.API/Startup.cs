@@ -41,7 +41,7 @@ namespace LaCarotte.API
             if (string.IsNullOrEmpty(mongoDbConnectionString)
                 || string.IsNullOrEmpty(dbName))
             {
-                throw new Exception("MongoDB configuration not found");
+                throw new Exception("MongoDB Connection string & DbName not found");
             }
 
             var loggerFactory = LoggerFactory.Create(builder => builder.AddSerilog(Log.Logger));
