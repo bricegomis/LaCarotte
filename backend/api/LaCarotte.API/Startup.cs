@@ -17,9 +17,8 @@ namespace LaCarotte.API
         public void ConfigureServices(IServiceCollection services)
         {
             // Init configuration
-            var mongoDbConnectionString = Configuration["MongoDB:ConnectionString"];
-            var dbName = Configuration["MongoDB:DbName"];
-            dbName = "LaCarotte";// TODO remove
+            var mongoDbConnectionString = Configuration["MongoDB_ConnectionString"];
+            var dbName = Configuration["MongoDB_DbName"];
 
             services.AddCors(options =>
             {
