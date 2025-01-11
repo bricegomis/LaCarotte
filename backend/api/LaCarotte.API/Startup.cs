@@ -1,7 +1,6 @@
 using LaCarotte.API.Manager;
 using LaCarotte.API.Services;
 using Microsoft.OpenApi.Models;
-using Nest;
 using Serilog;
 
 namespace LaCarotte.API
@@ -18,13 +17,9 @@ namespace LaCarotte.API
         public void ConfigureServices(IServiceCollection services)
         {
             // Init configuration
-            var host = Configuration["MongoDB:Host"];
-            var port = Configuration["MongoDB:Port"];
-            var login = Configuration["MongoDB:Login"];
-            var password = Configuration["MongoDB:Password"];
+            var mongoDbConnectionString = Configuration["MongoDB:ConnectionString"];
             var dbName = Configuration["MongoDB:DbName"];
             dbName = "LaCarotte";// TODO remove
-            var connectionString = $"mongodb://{login}:{password}@{host}:{port}/";
 
             services.AddCors(options =>
             {
@@ -43,11 +38,8 @@ namespace LaCarotte.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LaCarotte.API", Version = "v1" });
             });
 
-            if (string.IsNullOrEmpty(host)
-                || string.IsNullOrEmpty(port)
-                || string.IsNullOrEmpty(dbName)
-                || string.IsNullOrEmpty(login)
-                || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(mongoDbConnectionString)
+                || string.IsNullOrEmpty(dbName))
             {
                 throw new Exception("MongoDB configuration not found");
             }
@@ -57,21 +49,12 @@ namespace LaCarotte.API
 
             var mongoDBService = new MongoDBService(loggerFactory.CreateLogger<MongoDBService>(),
                                                     datetimeProvider,
-                                                    connectionString,
+                                                    mongoDbConnectionString,
                                                     dbName);
             services.AddSingleton<IMongoDBService>(mongoDBService);
 
-            var connectionSettings = new ConnectionSettings(new Uri("http://localhost:9200"))
-                                        .DefaultIndex("history-items");
-            var elasticClient = new ElasticClient(connectionSettings);
-            services.AddSingleton<IElasticClient>(elasticClient);
-
-            var historyItemService = new HistoryItemService(elasticClient);
-            services.AddSingleton<IHistoryItemService>(historyItemService);
-
             var manager = new CarotteManager(loggerFactory.CreateLogger<ICarotteManager>(),
                                             mongoDBService,
-                                            historyItemService,
                                             datetimeProvider);
             services.AddSingleton<ICarotteManager>(manager);
             services.AddSingleton<IHostedService>(provider => manager);

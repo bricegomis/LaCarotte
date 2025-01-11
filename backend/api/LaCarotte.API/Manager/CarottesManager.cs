@@ -5,12 +5,10 @@ namespace LaCarotte.API.Manager
 {
     public class CarotteManager(ILogger<ICarotteManager> logger,
                                IMongoDBService mongoDBService,
-                               IHistoryItemService historyItemService,
                                IDateTimeProvider dateTimeProvider) : BackgroundService, ICarotteManager
     {
         private const string Login = "Test";
         private readonly IMongoDBService _mongoDBService = mongoDBService;
-        private readonly IHistoryItemService _historyItemService = historyItemService;
         private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
         private readonly ILogger<ICarotteManager> _logger = logger;
         public Profile? CurrentProfile { get; set; }
@@ -102,9 +100,6 @@ namespace LaCarotte.API.Manager
                 ProfileId = CurrentProfile.Id
             };
             await _mongoDBService.CreateHistory(history);
-
-            // To Elastic
-            await _historyItemService.AddHistoryItem(history);
         }
 
         public async Task UpdateCarotte(Carotte carotte)
