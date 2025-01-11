@@ -22,7 +22,7 @@ namespace LaCarotte.API.Services
             _dateTimeProvider = dateTimeProvider;
             _client = new MongoClient(connectionString);
 
-            string carotteCollectionName = "Carrotes";
+            string carotteCollectionName = "Carottes";
             string historyCollectionName = "HistoryItems";
             string profileCollectionName = "Profiles";
 
