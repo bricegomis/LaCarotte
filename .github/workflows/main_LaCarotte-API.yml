@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9c8290f273e54b2db851ca53b60abcec }}/bricegomis/lacarotte-api:${{ github.sha }}
+        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9c8290f273e54b2db851ca53b60abcec }}/bricegomis/lacarotte-api:latest
         file: ./Dockerfile
 
   deploy:
