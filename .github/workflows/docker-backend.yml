@@ -33,3 +33,18 @@ jobs:
       - name: Push Docker image
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/lacarotte-api:latest
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'LaCarotte-API'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_5b4c8a79542c44c2a6fa3a345ebbf }}
+        images: 'ghcr.io/bricegomis/lacarotte-api:latest'
