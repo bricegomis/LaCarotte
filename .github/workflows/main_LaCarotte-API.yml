@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9c8290f273e54b2db851ca53b60abcec }}/bricegomis/lacarotte-api:latest
+        tags: ghcr.io/bricegomis/lacarotte-api:latest
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'LaCarotte-API'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_5b4c8a79542c44c2a6fa3a345ebbf03d }}
-        images: 'ghcr.io/${{ secrets.AzureAppService_ContainerUsername_9c8290f273e54b2db851ca53b60abcec }}/bricegomis/lacarotte-api:latest'
+        images: 'ghcr.io/bricegomis/lacarotte-api:latest'
