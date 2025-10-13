@@ -1,0 +1,3 @@
+[submodule "backend/api/CommonLibs"]
+	path = backend/api/CommonLibs
+	url = https://github.com/bricegomis/API.Common.git

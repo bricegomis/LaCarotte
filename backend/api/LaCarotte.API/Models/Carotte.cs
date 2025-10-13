@@ -3,11 +3,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace LaCarotte.API.Models
 {
-    [BsonIgnoreExtraElements]
     public class Carotte
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
         public required string Title { get; set; }
         public string? Desc { get; set; }
@@ -15,7 +12,6 @@ namespace LaCarotte.API.Models
         public DateTimeOffset? DateUpdated { get; set; }
         public bool? IsReward { get; set; }
         public int? Points { get; set; }
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? ProfileId { get; set; }
         public string? Image { get; set; }
         public List<string>? Tags { get; set; } = [];
