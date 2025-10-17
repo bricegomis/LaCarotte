@@ -1,9 +1,8 @@
+using System.Diagnostics;
 using LaCarotte.API.Manager;
 using LaCarotte.API.Models;
-using LaCarotte.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Diagnostics;
 
 namespace LaCarotte.API.Controllers
 {

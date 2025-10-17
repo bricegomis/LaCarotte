@@ -1,25 +1,22 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-#test
-
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
-EXPOSE 8080
+EXPOSE 5000
 
-# Build API
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src/api
-COPY ["LaCarotte.API.csproj", "."]
-RUN dotnet restore "./LaCarotte.API.csproj"
+ENV ASPNETCORE_URLS=http://+:5000
+
+USER app
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG configuration=Release
+WORKDIR /src
+COPY ["LaCarotte.API/LaCarotte.API.csproj", "LaCarotte.API/"]
+RUN dotnet restore "LaCarotte.API/LaCarotte.API.csproj"
 COPY . .
-WORKDIR "/src/api/."
-RUN dotnet build "./LaCarotte.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/LaCarotte.API"
+RUN dotnet build "LaCarotte.API.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./LaCarotte.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+ARG configuration=Release
+RUN dotnet publish "LaCarotte.API.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

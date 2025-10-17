@@ -11,15 +11,6 @@
       "publishAllPorts": true,
       "useSSL": true
     },
-    "Container (Dockerfile) (1)": {
-      "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "environmentVariables": {
-        "ASPNETCORE_HTTP_PORTS": "8080"
-      },
-      "publishAllPorts": true
-    }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
