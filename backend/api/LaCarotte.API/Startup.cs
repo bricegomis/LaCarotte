@@ -1,6 +1,7 @@
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json.Serialization;
+using Ati.API.Common.Constants;
 using Ati.API.Common.Controllers;
 using Ati.API.Common.Extensions;
 using Ati.API.Common.Filters;
@@ -17,14 +18,6 @@ namespace LaCarotte.API;
 
 public class Startup(IConfiguration configuration)
 {
-    private const string RavenDbServer = "RavenDBServer";
-    private const string RavenDbDbName = "RavenDBDbName";
-    private const string RavenDbCertificateBase64 = "RavenDBCertificateBase64";
-    private const string RavenDbCertificatePassword = "RavenDBCertificatePassword";
-    private const string AuthSettingsJwtKey = "AuthSettingsJwtKey";
-    private const string AuthSettingsJwtIssuer = "AuthSettingsJwtIssuer";
-    private const string AuthSettingsJwtAudience = "AuthSettingsJwtAudience";
-
     private IConfiguration Configuration { get; } = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
     public void ConfigureServices(IServiceCollection services)
@@ -84,7 +77,7 @@ public class Startup(IConfiguration configuration)
 
         RegisterRavenDb(services);
 
-        var jwtKey = Configuration[AuthSettingsJwtKey];
+        var jwtKey = Configuration[EnvConstants.AuthSettingsJwtKey];
         if (string.IsNullOrEmpty(jwtKey))
         {
             throw new InvalidOperationException("JWT Key is not configured in AuthSettings:JwtKey.");
@@ -103,8 +96,8 @@ public class Startup(IConfiguration configuration)
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = Configuration[AuthSettingsJwtIssuer],
-                ValidAudience = Configuration[AuthSettingsJwtAudience],
+                ValidIssuer = Configuration[EnvConstants.AuthSettingsJwtIssuer],
+                ValidAudience = Configuration[EnvConstants.AuthSettingsJwtAudience],
                 IssuerSigningKey = new SymmetricSecurityKey(key)
             };
         });
@@ -114,22 +107,22 @@ public class Startup(IConfiguration configuration)
 
     private void RegisterRavenDb(IServiceCollection services)
     {
-        var ravenDbServer = Configuration[RavenDbServer];
+        var ravenDbServer = Configuration[EnvConstants.RavenDbServer];
         if (ravenDbServer == null)
         {
             throw new InvalidOperationException("RavenDB server URL is not configured");
         }
-        var ravenDbName = Configuration[RavenDbDbName];
+        var ravenDbName = Configuration[EnvConstants.RavenDbDbName];
         if (ravenDbName == null)
         {
             throw new InvalidOperationException("RavenDB database name is not configured");
         }
-        var ravenDbCertBase64 = Configuration[RavenDbCertificateBase64];
+        var ravenDbCertBase64 = Configuration[EnvConstants.RavenDbCertificateBase64];
         if (ravenDbCertBase64 == null)
         {
             throw new InvalidOperationException("RavenDB certificate is not configured");
         }
-        var ravenDbCertPassword = Configuration[RavenDbCertificatePassword];
+        var ravenDbCertPassword = Configuration[EnvConstants.RavenDbCertificatePassword];
         if (ravenDbCertPassword == null)
         {
             throw new InvalidOperationException("RavenDB certificate password is not configured");
