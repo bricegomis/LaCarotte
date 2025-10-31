@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-
-public class TimedTaskService(ILogger<TimedTaskService> logger) : IHostedService, IDisposable
+﻿public class TimedTaskService(ILogger<TimedTaskService> logger) : IHostedService, IDisposable
 {
     private readonly ILogger<TimedTaskService> _logger = logger;
     private readonly List<(Timer timer, Func<Task> task)> _tasks = [];
